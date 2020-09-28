@@ -58,6 +58,7 @@ function getChannelByName(channelName, channels) {
  ****************************************************************/
 function getChannelByVideoTitle(videoTitle, channels) {
   return channels.find(channel => channel.videos.some(video => video.title.includes(videoTitle)));
+  // channels.find(channel => channelHasVideo(videoTitle, channel))
 }
 
 /**************************************************************
@@ -80,7 +81,7 @@ function searchChannels(query, channels) {
  * BONUS: use iteration method `.reduce()`
  ****************************************************************/
 function totalVideosDuration(channel) {
-   return channel.videos.map(x => x.duration).reduce( (total, current) => total + current)
+   return channel.videos.map(x => x.duration).reduce( (total, current) => total + current ) 
 }
 
 /**************************************************************
@@ -91,10 +92,9 @@ function totalVideosDuration(channel) {
  * Hint: use the `totalVideosDuration()` function
  * BONUS: use iteration method `.sort()`
  ****************************************************************/
-function channelWithMostContent(channels) {
-  console.log(  channels.forEach(channel =>  console.log(channel)))
-  
-  return channels.forEach(channel =>  totalVideosDuration(channel))
+function channelWithMostContent(channels) {  
+  channels.sort(channel =>  totalVideosDuration(channel))
+  return channels[0]
   
 }
 
@@ -106,8 +106,17 @@ function channelWithMostContent(channels) {
  * BONUS: use iteration method `.sort()`
  ****************************************************************/
 function longestChannelName(channels) {
-  return channels.sort(channel => channel.name.length)
-  
+  let longgest = channels[0]
+  channels.forEach(channel => {
+    if (channel.name.length > longgest.name.length) 
+        longgest = channel
+  });
+  return longgest
+  // channels.sort(channel => channel.name.length)
+  // return channels[0]
+
+  // return channels.sort( ch => totalVideosDuration(ch))[0];
+  // return channels.sort((a,b) => {return b.name.length-a.name.length})[0];
 }
 
 module.exports = {
